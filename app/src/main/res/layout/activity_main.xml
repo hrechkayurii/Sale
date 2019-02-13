@@ -4,9 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/welcome">
 
 
+<ImageView
+    android:src="@drawable/applogo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    />
 
 
 
