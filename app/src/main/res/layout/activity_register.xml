@@ -25,7 +25,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:hint="User name"
-        android:inputType="number"
+        android:inputType="text"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHighlight="@color/colorPrimaryDark"
         android:textSize="17sp"
