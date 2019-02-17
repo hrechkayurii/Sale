@@ -67,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "phone is empty", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "password is empty", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             mProgressDialog.setTitle("Create account");
             mProgressDialog.setMessage("Please wait...");
             mProgressDialog.setCanceledOnTouchOutside(false);
@@ -80,14 +80,11 @@ public class RegisterActivity extends AppCompatActivity {
     private void ValidatePhoneNumber(final String name, final String phone, final String password) {
 
 
-
-
-
         rootRefDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (!(dataSnapshot.child("Users").child(phone).exists())){
+                if (!(dataSnapshot.child("Users").child(phone).exists())) {
 
                     HashMap<String, Object> userDataMap = new HashMap<>();
                     userDataMap.put("phone", phone);
@@ -98,13 +95,13 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
-                                    if (task.isSuccessful()){
+                                    if (task.isSuccessful()) {
                                         Toast.makeText(RegisterActivity.this, "Account created.", Toast.LENGTH_SHORT).show();
                                         mProgressDialog.dismiss();
 
                                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                         startActivity(intent);
-                                    }else {
+                                    } else {
                                         mProgressDialog.dismiss();
                                         Toast.makeText(RegisterActivity.this, "Error create account.", Toast.LENGTH_SHORT).show();
 
@@ -112,8 +109,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                             });
 
-                }else {
-                    Toast.makeText(RegisterActivity.this, "phone "+phone+" already exists.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RegisterActivity.this, "phone " + phone + " already exists.", Toast.LENGTH_SHORT).show();
                     mProgressDialog.dismiss();
                     Toast.makeText(RegisterActivity.this, "using another phone number.", Toast.LENGTH_SHORT).show();
 
@@ -132,10 +129,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void init() {
 
-        createAccountButton = (Button)findViewById(R.id.register_btn);
-        inputName = (EditText)findViewById(R.id.register_username_input);
-        inputPhoneNumber = (EditText)findViewById(R.id.register_phone_number_input);
-        inputPassword = (EditText)findViewById(R.id.register_password_input);
+        createAccountButton = (Button) findViewById(R.id.register_btn);
+        inputName = (EditText) findViewById(R.id.register_username_input);
+        inputPhoneNumber = (EditText) findViewById(R.id.register_phone_number_input);
+        inputPassword = (EditText) findViewById(R.id.register_password_input);
 
         mProgressDialog = new ProgressDialog(this);
 

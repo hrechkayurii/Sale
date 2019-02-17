@@ -82,25 +82,25 @@ public class LoginActivity extends AppCompatActivity {
         String phone = inputPhoneNumber.getText().toString();
         String password = inputPassword.getText().toString();
 
-    if (TextUtils.isEmpty(phone)) {
-        Toast.makeText(this, "phone is empty", Toast.LENGTH_SHORT).show();
-    } else if (TextUtils.isEmpty(password)) {
-        Toast.makeText(this, "password is empty", Toast.LENGTH_SHORT).show();
-    }else {
-        mProgressDialog.setTitle("Login account");
-        mProgressDialog.setMessage("Please wait...");
-        mProgressDialog.setCanceledOnTouchOutside(false);
-        mProgressDialog.show();
+        if (TextUtils.isEmpty(phone)) {
+            Toast.makeText(this, "phone is empty", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "password is empty", Toast.LENGTH_SHORT).show();
+        } else {
+            mProgressDialog.setTitle("Login account");
+            mProgressDialog.setMessage("Please wait...");
+            mProgressDialog.setCanceledOnTouchOutside(false);
+            mProgressDialog.show();
 
-        allowAccessToAccount(phone, password);
-    }
+            allowAccessToAccount(phone, password);
+        }
 
     }
 
     private void allowAccessToAccount(final String phone, final String password) {
 
 
-        if (chkBoxRememberMe.isChecked()){
+        if (chkBoxRememberMe.isChecked()) {
             Paper.book().write(Prevalent.userPhoneKey, phone);
             Paper.book().write(Prevalent.userPasswordKey, password);
         }
@@ -112,14 +112,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.child(parentDBName).child(phone).exists()){
+                if (dataSnapshot.child(parentDBName).child(phone).exists()) {
 
                     Users usersData = dataSnapshot.child(parentDBName).child(phone)
                             .getValue(Users.class);
 
-                    if (usersData.getPhone().equals(phone)){
+                    if (usersData.getPhone().equals(phone)) {
 
-                        if (usersData.getPassword().equals(password)){
+                        if (usersData.getPassword().equals(password)) {
 
                             if (parentDBName.equals("Admins")) {
 
@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivity.this, AdminAddNewProductActivity.class);
                                 startActivity(intent);
 
-                            }else if (parentDBName.equals("Users")){
+                            } else if (parentDBName.equals("Users")) {
 
                                 Toast.makeText(LoginActivity.this, "Login OK", Toast.LENGTH_LONG).show();
                                 mProgressDialog.dismiss();
@@ -139,14 +139,14 @@ public class LoginActivity extends AppCompatActivity {
 
                             }
 
-                        }else {
+                        } else {
                             Toast.makeText(LoginActivity.this, "incorrect password", Toast.LENGTH_LONG).show();
                             mProgressDialog.dismiss();
                         }
 
                     }
 
-                }else {
+                } else {
                     Toast.makeText(LoginActivity.this, "Not account", Toast.LENGTH_SHORT).show();
                     mProgressDialog.dismiss();
                     Toast.makeText(LoginActivity.this, "Creatr new account", Toast.LENGTH_SHORT).show();
@@ -165,16 +165,16 @@ public class LoginActivity extends AppCompatActivity {
 
     private void init() {
 
-        loginButton = (Button)findViewById(R.id.login_btn);
+        loginButton = (Button) findViewById(R.id.login_btn);
 
-        inputPhoneNumber = (EditText)findViewById(R.id.login_phone_number_input);
-        inputPassword = (EditText)findViewById(R.id.login_password_input);
-        chkBoxRememberMe = (CheckBox)findViewById(R.id.remember_me_chkb);
+        inputPhoneNumber = (EditText) findViewById(R.id.login_phone_number_input);
+        inputPassword = (EditText) findViewById(R.id.login_password_input);
+        chkBoxRememberMe = (CheckBox) findViewById(R.id.remember_me_chkb);
 
         mProgressDialog = new ProgressDialog(this);
 
-        adminLink = (TextView)findViewById(R.id.admin_panel_link);
-        notAdminLink = (TextView)findViewById(R.id.not_admin_panel_link);
+        adminLink = (TextView) findViewById(R.id.admin_panel_link);
+        notAdminLink = (TextView) findViewById(R.id.not_admin_panel_link);
 
     }
 
