@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText inputPhoneNumber;
     private EditText inputPassword;
+
+    private TextView adminLink, notAdminLink;
 
     private ProgressDialog mProgressDialog;
 
@@ -50,6 +53,26 @@ public class LoginActivity extends AppCompatActivity {
 
                 loginUser();
 
+            }
+        });
+
+        adminLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginButton.setText("Login admin");
+                adminLink.setVisibility(View.INVISIBLE);
+                notAdminLink.setVisibility(View.VISIBLE);
+                parentDBName = "Admins";
+            }
+        });
+
+        notAdminLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginButton.setText("Login");
+                adminLink.setVisibility(View.VISIBLE);
+                notAdminLink.setVisibility(View.INVISIBLE);
+                parentDBName = "Users";
             }
         });
     }
@@ -98,11 +121,23 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (usersData.getPassword().equals(password)){
 
-                            Toast.makeText(LoginActivity.this, "Login OK", Toast.LENGTH_LONG).show();
-                            mProgressDialog.dismiss();
+                            if (parentDBName.equals("Admins")) {
 
-                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                            startActivity(intent);
+                                Toast.makeText(LoginActivity.this, "Admin login OK", Toast.LENGTH_LONG).show();
+                                mProgressDialog.dismiss();
+
+                                Intent intent = new Intent(LoginActivity.this, AdminAddNewProductActivity.class);
+                                startActivity(intent);
+
+                            }else if (parentDBName.equals("Users")){
+
+                                Toast.makeText(LoginActivity.this, "Login OK", Toast.LENGTH_LONG).show();
+                                mProgressDialog.dismiss();
+
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                startActivity(intent);
+
+                            }
 
                         }else {
                             Toast.makeText(LoginActivity.this, "incorrect password", Toast.LENGTH_LONG).show();
@@ -137,6 +172,9 @@ public class LoginActivity extends AppCompatActivity {
         chkBoxRememberMe = (CheckBox)findViewById(R.id.remember_me_chkb);
 
         mProgressDialog = new ProgressDialog(this);
+
+        adminLink = (TextView)findViewById(R.id.admin_panel_link);
+        notAdminLink = (TextView)findViewById(R.id.not_admin_panel_link);
 
     }
 
