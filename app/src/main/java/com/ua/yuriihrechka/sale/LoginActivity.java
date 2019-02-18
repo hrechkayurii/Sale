@@ -105,8 +105,8 @@ public class LoginActivity extends AppCompatActivity {
             Paper.book().write(Prevalent.userPasswordKey, password);
         }
 
-        final DatabaseReference rootRefDB;
-        rootRefDB = FirebaseDatabase.getInstance().getReference();
+        //final DatabaseReference rootRefDB;
+        //rootRefDB = FirebaseDatabase.getInstance().getReference();
 
         rootRefDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -114,8 +114,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (dataSnapshot.child(parentDBName).child(phone).exists()) {
 
-                    Users usersData = dataSnapshot.child(parentDBName).child(phone)
-                            .getValue(Users.class);
+                    Users usersData = dataSnapshot.child(parentDBName).child(phone).getValue(Users.class);
 
                     if (usersData.getPhone().equals(phone)) {
 
@@ -126,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "Admin login OK", Toast.LENGTH_LONG).show();
                                 mProgressDialog.dismiss();
 
-                                Intent intent = new Intent(LoginActivity.this, AdminAddNewProductActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, AdminCategoryActivity.class);
                                 startActivity(intent);
 
                             } else if (parentDBName.equals("Users")) {
