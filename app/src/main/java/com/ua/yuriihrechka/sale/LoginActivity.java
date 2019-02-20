@@ -134,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                                 mProgressDialog.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                Prevalent.currentOnlineUser = usersData;
                                 startActivity(intent);
 
                             }
