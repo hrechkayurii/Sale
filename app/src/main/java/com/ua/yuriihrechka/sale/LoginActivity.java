@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(LoginActivity.this, "Not account", Toast.LENGTH_SHORT).show();
                     mProgressDialog.dismiss();
-                    Toast.makeText(LoginActivity.this, "Creatr new account", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Create new account", Toast.LENGTH_SHORT).show();
                 }
             }
 

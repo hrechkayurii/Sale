@@ -64,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
         String userPasswordKey = Paper.book().read(Prevalent.userPasswordKey);
 
         if (userPhoneKey != null && userPasswordKey != "") {
-            if (TextUtils.isEmpty(userPhoneKey) && !TextUtils.isEmpty(userPasswordKey)) {
+            if (!TextUtils.isEmpty(userPhoneKey) && !TextUtils.isEmpty(userPasswordKey)) {
+
                 allowAccess(userPhoneKey, userPasswordKey);
 
                 mProgressDialog.setTitle("Login account");
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                             mProgressDialog.dismiss();
 
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                            Prevalent.currentOnlineUser = usersData;
                             startActivity(intent);
 
                         } else {
@@ -110,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(MainActivity.this, "Not account", Toast.LENGTH_SHORT).show();
                     mProgressDialog.dismiss();
-                    Toast.makeText(MainActivity.this, "Creatr new account", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Create new account", Toast.LENGTH_SHORT).show();
                 }
             }
 
