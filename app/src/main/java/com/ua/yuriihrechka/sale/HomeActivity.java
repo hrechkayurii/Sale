@@ -79,6 +79,8 @@ public class HomeActivity extends AppCompatActivity
 
 
         userNameTestView.setText(Prevalent.currentOnlineUser.getName());
+        Picasso.get().load(Prevalent.currentOnlineUser.getImage()).placeholder(R.drawable.profile).into(profileImageView);
+
 
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_menu);
         mRecyclerView.setHasFixedSize(true);
