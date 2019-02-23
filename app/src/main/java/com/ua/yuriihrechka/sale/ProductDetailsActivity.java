@@ -41,6 +41,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private Button addToCartBtn;
 
     private String productID = "";
+    private String state = "Normal";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +55,24 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                addingToCartList();
+
+
+                if (state.equals("OrderPlaced") || state.equals("OrderShipped")){
+                    Toast.makeText(ProductDetailsActivity.this, "shipped", Toast.LENGTH_LONG).show();
+                } else {
+                    addingToCartList();
+                }
             }
         });
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        checkOrderState();
 
     }
 
@@ -144,6 +159,44 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     }
 
+    private void checkOrderState() {
+
+        DatabaseReference ordersRef;
+        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders")
+                .child(Prevalent.currentOnlineUser.getPhone());
+
+        ordersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+                    String shippingState = dataSnapshot.child("state").getValue().toString();
+
+
+                    if (shippingState.equals("shipped")) {
+
+                        state = "OrderShipped";
+
+
+                    } else if (shippingState.equals("not shipped")) {
+
+                        state = "OrderPlaced";
+
+
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
     private void init() {
 
         productID = getIntent().getStringExtra("pid");
@@ -158,4 +211,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         getProductDetails(productID);
     }
+
+
 }
