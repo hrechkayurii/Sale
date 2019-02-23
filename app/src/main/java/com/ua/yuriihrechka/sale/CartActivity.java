@@ -1,6 +1,9 @@
 package com.ua.yuriihrechka.sale;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ua.yuriihrechka.sale.Model.Cart;
@@ -52,11 +58,61 @@ public class CartActivity extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull Cart model) {
+            protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull final Cart model) {
 
                 holder.txtProductName.setText(model.getName());
                 holder.txtProductPrice.setText("Price " + model.getPrice()+" $");
                 holder.txtProductQuantity.setText("Quantity = " + model.getQuantity());
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        CharSequence optionsAD[] = new CharSequence[]{
+                                "Edit",
+                                "Remove"
+                        };
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
+                        builder.setTitle("Cart options");
+                        builder.setItems(optionsAD, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                if (which == 0){
+
+                                    Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);
+                                    intent.putExtra("pid", model.getPid());
+                                    startActivity(intent);
+
+                                }else if (which == 1){
+
+                                    cartListRef.child("UserView").child(Prevalent.currentOnlineUser.getPhone())
+                                            .child("Product").child(model.getPid())
+                                            .removeValue()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()){
+
+                                                        Toast.makeText(CartActivity.this, "Successful removed.", Toast.LENGTH_LONG).show();
+
+                                                        Intent intent = new Intent(CartActivity.this, HomeActivity.class);
+                                                        startActivity(intent);
+                                                    }
+                                                }
+                                            });
+
+                                }
+
+                            }
+                        });
+
+                        builder.show();
+
+
+                    }
+                });
 
             }
 
