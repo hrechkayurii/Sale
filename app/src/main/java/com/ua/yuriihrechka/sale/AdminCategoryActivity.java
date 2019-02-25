@@ -20,7 +20,7 @@ public class AdminCategoryActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_category);
 
-        logoutBtn = (Button)findViewById(R.id.action_logout);
+        logoutBtn = (Button)findViewById(R.id.admin_logout_btn);
         checkOrdersBtn = (Button)findViewById(R.id.check_orders_btn);
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
@@ -38,7 +38,7 @@ public class AdminCategoryActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
+                Intent intent = new Intent(AdminCategoryActivity.this, AdminNewOrdersActivity.class);
 
                 startActivity(intent);
 

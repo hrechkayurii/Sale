@@ -32,7 +32,7 @@ import java.util.HashMap;
 
 public class AdminAddNewProductActivity extends AppCompatActivity {
 
-    private String categoryName, pDescription, pPrice, pName, saveCurrendDate, saveCurrentTime;
+    private String categoryName, pDescription, pPrice, pName, saveCurrentDate, saveCurrentTime;
     private Button addNewProductButton;
     private EditText inputProductName;
     private EditText inputProductDescription;
@@ -110,12 +110,12 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
-        saveCurrendDate = currentDate.format(calendar.getTime());
+        saveCurrentDate = currentDate.format(calendar.getTime());
 
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime = currentTime.format(calendar.getTime());
 
-        productRandomKey = saveCurrendDate + saveCurrentTime;
+        productRandomKey = saveCurrentDate + saveCurrentTime;
 
         final StorageReference filePath = productImagesRef.child(imageUri.getLastPathSegment()+productRandomKey+".jpg");
         final UploadTask uploadTask = filePath.putFile(imageUri);
@@ -170,7 +170,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
 
         HashMap<String, Object> productMap = new HashMap<>();
         productMap.put("pid",productRandomKey);
-        productMap.put("date", saveCurrendDate);
+        productMap.put("date", saveCurrentDate);
         productMap.put("time",saveCurrentTime);
         productMap.put("description",pDescription);
         productMap.put("image",downloadImageUrl);
