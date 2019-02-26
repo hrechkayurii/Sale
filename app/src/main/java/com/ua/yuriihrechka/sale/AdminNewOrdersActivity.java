@@ -1,5 +1,6 @@
 package com.ua.yuriihrechka.sale;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,13 +48,25 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<AdminOrders, AdminOrdersViewHolder> adapter =
                 new FirebaseRecyclerAdapter<AdminOrders, AdminOrdersViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull AdminOrdersViewHolder holder, int position, @NonNull AdminOrders model) {
+                    protected void onBindViewHolder(@NonNull AdminOrdersViewHolder holder, final int position, @NonNull final AdminOrders model) {
 
                         holder.userName.setText("Name "+model.getName());
                         holder.userAddress.setText("Address "+model.getAddress());
                         holder.userDateTime.setText("Date "+model.getDate());
                         holder.userPhoneNumber.setText("Phone "+model.getPhone());
                         holder.userTotalPrice.setText("Total Amount "+model.getTotalAmount());
+
+                        holder.showOrdersBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                String uid = getRef(position).getKey();
+
+                                Intent intent = new Intent(AdminNewOrdersActivity.this, AdminUserProductsActivity.class);
+                                intent.putExtra("uid", uid);
+                                startActivity(intent);
+                            }
+                        });
 
                     }
 
