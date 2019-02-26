@@ -142,6 +142,9 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_orders) {
 
+            Intent intent = new Intent(HomeActivity.this, SearchProductsActivity.class);
+            startActivity(intent);
+
         } else if (id == R.id.nav_categories) {
 
         } else if (id == R.id.nav_settings) {
